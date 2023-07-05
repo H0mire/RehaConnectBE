@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
-router.get("users", async (req, res) => {
+router.get("/users", async (req, res) => {
 	let collection = await db.collection("users");
 	let results = await collection.find({})
 	  .limit(50)
