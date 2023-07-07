@@ -1,3 +1,4 @@
+import './db/conn.js';
 import "./configureEnv.js";
 import express from "express";
 import cors from "cors";

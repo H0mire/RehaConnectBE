@@ -1,12 +1,10 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-
-const connectionString = process.env.URI || "mongodb://localhost:27017/";
+const connectionString = process.env.URI || "mongodb://0.0.0.0:27017/";
 // Verbinden mit der MongoDB-Datenbank
-mongoose.connect(connectionString+rehadatatables, {
+mongoose.connect(connectionString+"RehaConnect", {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
+  useUnifiedTopology: true
 }).then(() => {
   console.log('Verbunden mit der MongoDB-Datenbank');
 }).catch((error) => {
@@ -29,4 +27,4 @@ mongoose.connection.on('disconnected', () => {
 });
 
 // Exportiere die Mongoose-Instanz für den Zugriff in anderen Dateien
-module.exports = mongoose;
+export default mongoose;

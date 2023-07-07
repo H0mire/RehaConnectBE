@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const trainingSchema = new mongoose.Schema({
 	date: Date,
@@ -15,6 +15,6 @@ const trainingSchema = new mongoose.Schema({
 	}
 });
 
-const Training = mongoose.model('User', trainingSchema);
+const Training = mongoose.model('Training', trainingSchema);
 
-module.exports = Training;
+export default Training;

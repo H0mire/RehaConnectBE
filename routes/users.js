@@ -1,10 +1,10 @@
 import express from "express";
 import shortid from "shortid";
 import bcrypt from "bcrypt";
-
-const User = require('../models/user');
-const Invitation = require('../models/invitation');
-const jwt = require('jsonwebtoken');
+import moment from "moment";
+import User from '../models/user.js';
+import Invitation from '../models/invitation.js';
+const jwt = import('jsonwebtoken');
 const SECRET = process.env.SECRET;
 
 
@@ -25,8 +25,10 @@ router.get('/users', async (req, res) => {
 router.post('/invite', async (req, res) => {
 	try {
 		// Extrahiere die Einladungsdetails aus dem Anfragekörper
-		const { firstName, lastName, birthday, role, idDoctor } = req.body;
+		const { firstName, lastName, birthDate, role, idDoctor } = req.body;
+		console.log(req.body);
 
+		let birthDateT = moment(birthDate, 'DD.MM.YYYY').toDate();
 		// Generiere den InvitationCode
 		const invitationCode = shortid.generate();
 
@@ -35,16 +37,17 @@ router.post('/invite', async (req, res) => {
 			invitationCode,
 			firstName,
 			lastName,
-			birthday,
+			birthDate:birthDateT,
 			role,
 			idDoctor
 		});
-
+		console.log(invitation.birthDate);
 		// Speichere die Einladung in der Datenbank
 		await invitation.save();
 
-		res.status(201).json({ message: 'Einladung erstellt' });
+		res.status(201).json({ message: 'Einladung erstellt', invitationCode });
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ message: 'Ein Fehler ist aufgetreten' });
 	}
 });
@@ -63,8 +66,17 @@ router.post('/register', async (req, res) => {
 			return res.status(400).json({ message: 'Benutzername bereits vergeben' });
 		}
 
+		const invitation = await Invitation.findOne(filter={
+			invitationCode:invitationCode
+		})
+		if (invitation) {
+			return res.status(400).json({ message: 'Einladung ungültig' });
+		}
+		firstName = invitation.firstName;
+		lastName = invitation.lastName;
+		role = invitation.role;
 		// Neuen Benutzer erstellen
-		const newUser = new User({ username, email, password, birthDate });
+		const newUser = new User({ firstName, lastName, email, username, password, birthDate, role });
 		await newUser.save();
 
 		const token = jwt.sign({ userId: newUser._id }, SECRET, { expiresIn: '1h' });

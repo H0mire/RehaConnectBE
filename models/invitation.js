@@ -1,10 +1,11 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+
 
 const invitationSchema = new mongoose.Schema({
   invitationCode: String,
   firstName: String,
   lastName: String,
-  birthday: Date,
+  birthDate: Date,
   role: String,
   idDoctor: {
     type: mongoose.Schema.Types.ObjectId,
@@ -14,4 +15,4 @@ const invitationSchema = new mongoose.Schema({
 
 const Invitation = mongoose.model('Invitation', invitationSchema);
 
-module.exports = Invitation;
+export default Invitation;
