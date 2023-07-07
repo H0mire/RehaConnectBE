@@ -1,16 +1,18 @@
 import express from "express";
-import db from "../db/conn.js";
-import { ObjectId } from "mongodb";
+import Training from "../models/training.js";
 
 const router = express.Router();
 
 router.get("/:id", async (req, res) => {
-	let collection = await db.collection("trainings");
-	let results = await collection.aggregate([
-	  {"$IDUser": ObjectId(req.params.id)}
-	]).toArray();
-	res.send(results).status(200); 
-  });
-  
+  try {
+    const training = await Training.findOne({ _id: req.params.id });
+    if (!training) {
+      return res.status(404).json({ message: "Training nicht gefunden" });
+    }
+    res.status(200).json(training);
+  } catch (error) {
+    res.status(500).json({ message: "Interner Serverfehler" });
+  }
+});
 
 export default router;
