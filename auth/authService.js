@@ -91,8 +91,10 @@ router.post('/login', async (req, res) => {
 
 		// Erstelle ein JWT-Token
 		const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+		const decoded = jwt.decode(token);
+		const expiresIn = decoded.exp- decoded.iat;
 
-		res.json({ token });
+		res.status(201).json({ message: 'Login erfolgreich', token, expiresIn });
 	} catch (error) {
 		res.status(500).json({ message: 'Interner Serverfehler' });
 	}
