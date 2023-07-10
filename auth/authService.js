@@ -94,7 +94,7 @@ router.post('/login', async (req, res) => {
 		const decoded = jwt.decode(token);
 		const expiresIn = decoded.exp- decoded.iat;
 
-		res.status(201).json({ message: 'Login erfolgreich', token, expiresIn });
+		res.status(200).json({ message: 'Login erfolgreich', token, expiresIn });
 	} catch (error) {
 		res.status(500).json({ message: 'Interner Serverfehler' });
 	}
