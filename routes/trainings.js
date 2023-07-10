@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
 		let idPatient = "";
 		// Erstelle eine neue Einladung
 		const training = new Training({
-			date:dateT,
+			date: dateT,
 			durationInSeconds,
 			maxPulse,
 			minPulse,
@@ -38,21 +38,21 @@ router.post('/', async (req, res) => {
 		});
 
 		const pulseHealthData = new HealthData({
-			metric:"Pulse",
-			data:pulseData,
-			trainingId:ObjectId(training.id)
+			metric: "Pulse",
+			data: pulseData,
+			trainingId: new ObjectId(training.id)
 
 		});
 
 		const speedHealthData = new HealthData({
-			metric:"Speed",
-			data:speedData,
-			trainingId:ObjectId(training.id)
+			metric: "Speed",
+			data: speedData,
+			trainingId: new ObjectId(training.id)
 		});
-		
+
 		await speedHealthData.save();
 		await pulseHealthData.save();
-		
+
 		// Speichere die Einladung in der Datenbank
 		await training.save();
 
@@ -74,8 +74,12 @@ router.get("/", async (req, res) => {
 
 router.get("/pulse/:id", async (req, res) => {
 	try {
-		const pulseData = await HealthData.findOne({trainingId:req.params.id, metric:"Pulse"});
-		res.status(200).json(pulseData);
+		const pulseData = await HealthData.findOne({ trainingId: req.params.id, metric: "Pulse" });
+		console.log(pulseData)
+		if (!pulseData) {
+			return res.status(400).json("not found");
+		}
+		res.status(200).json(pulseData.data);
 	} catch (error) {
 		res.status(500).json({ message: "Interner Serverfehler" });
 	}
@@ -83,7 +87,10 @@ router.get("/pulse/:id", async (req, res) => {
 
 router.get("/speed/:id", async (req, res) => {
 	try {
-		const speedData = await HealthData.findOne({trainingId:req.params.id, metric:"Speed"});
+		const speedData = await HealthData.findOne({ trainingId: req.params.id, metric: "Speed" });
+		if (!speedData) {
+			return res.status(400).json("not found");
+		}
 		res.status(200).json(speedData);
 	} catch (error) {
 		res.status(500).json({ message: "Interner Serverfehler" });
