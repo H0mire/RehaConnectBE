@@ -1,5 +1,5 @@
-import './db/conn.js';
 import "./configureEnv.js";
+import './db/conn.js';
 import express from "express";
 import cors from "cors";
 import "express-async-errors";
