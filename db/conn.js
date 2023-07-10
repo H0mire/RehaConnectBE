@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const connectionString = process.env.URI || "mongodb://0.0.0.0:27017/";
+const connectionString = process.env.URI || "mongodb://janikmichael.ddns.net:27017/";
 // Verbinden mit der MongoDB-Datenbank
 mongoose.connect(connectionString+"RehaConnect", {
   useNewUrlParser: true,
