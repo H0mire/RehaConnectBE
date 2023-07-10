@@ -5,14 +5,9 @@ const trainingSchema = new mongoose.Schema({
 	durationInSeconds: Number,
 	maxPulse: Number,
 	minPulse: Number,
-	averagePulse: Number,
+	avgPulse: Number,
 	sumSteps: Number,
-	avgSpeed: Number,
-	spo2: Number,
-	idPatient: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User' // Hier wird angegeben, auf welches Modell sich das ObjectId-Feld bezieht
-	}
+	avgSpeed: Number
 });
 
 const Training = mongoose.model('Training', trainingSchema);
