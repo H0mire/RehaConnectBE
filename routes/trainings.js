@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
 			data: speedData,
 			trainingId: new ObjectId(training.id)
 		});
-
+		//Speicher Health Daten in der Datenbank
 		await speedHealthData.save();
 		await pulseHealthData.save();
 

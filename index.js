@@ -14,7 +14,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/auth/",auth);
-//app.use("/app",auth.authenticateToken)
+app.use("/app",auth.authenticateToken)
 // Load the routes
 app.use("/app/users", users);
 app.use("/app/trainings", trainings);
