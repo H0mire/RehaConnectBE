@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'; // Importieren des mongoose-Moduls
 
-
+// Definition des Einladungs-Schemas
 const invitationSchema = new mongoose.Schema({
   invitationCode: String,
   firstName: String,
@@ -13,6 +13,8 @@ const invitationSchema = new mongoose.Schema({
   }
 });
 
+// Erstellen des Einladungs-Modells basierend auf dem Schema
 const Invitation = mongoose.model('Invitation', invitationSchema);
 
+// Exportieren des Einladungs-Modells für die Verwendung in anderen Dateien
 export default Invitation;

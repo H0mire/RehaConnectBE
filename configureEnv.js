@@ -1,3 +1,3 @@
+import dotenv from "dotenv"; // Importieren des dotenv-Moduls
 
-import dotenv from "dotenv";
-dotenv.config();
+dotenv.config(); // Laden der Umgebungsvariablen aus der .env-Datei

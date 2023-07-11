@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'; // Importieren des mongoose-Moduls
 
 const connectionString = process.env.URI || "mongodb://0.0.0.0:27017/";
 // Verbinden mit der MongoDB-Datenbank
-mongoose.connect(connectionString+"RehaConnect", {
+mongoose.connect(connectionString + "RehaConnect", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
