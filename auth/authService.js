@@ -25,7 +25,7 @@ function authenticateToken(req, res, next) {
   jwt.verify(token, secretKey, (err, userId) => {
     if (err) {
       // Token ungültig
-      return res.sendStatus(403);
+      return res.sendStatus(401);
     }
 
     // Füge den decodierten Benutzer zum Anfrageobjekt hinzu
